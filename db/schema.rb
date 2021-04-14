@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.text "address"
     t.integer "gender"
     t.string "thumbnail"
+    t.string "image"
     t.integer "price"
     t.string "holiday"
     t.string "tel"

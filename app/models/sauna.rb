@@ -6,4 +6,6 @@ class Sauna < ApplicationRecord
 
     has_many :wents
     has_many :wented_saunas, through: :wents, source: :user
+
+    mount_uploader :image, ImageUploader
 end

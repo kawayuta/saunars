@@ -7,6 +7,7 @@ class CreateSaunas < ActiveRecord::Migration[6.1]
       t.text :address
       t.integer :gender
       t.string :thumbnail
+      t.string :image
       
       t.integer :price
       t.string :holiday

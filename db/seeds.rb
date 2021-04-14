@@ -187,8 +187,10 @@ count = 1
         if @sauna.save
             image_url = item.search('.p-saunaItem_image img').attribute('src')
             file = MiniMagick::Image.open(image_url)
-            save_to_local = file.write  "public/sauna_images/#{@sauna.id}.jpg"
-            save_to_local = file.write  "public/sauna_images/state/#{@sauna.id}.jpg"
+            @sauna.image = file
+            @sauna.save
+            # save_to_local = file.write  "public/sauna_images/#{@sauna.id}.jpg"
+            # save_to_local = file.write  "public/sauna_images/state/#{@sauna.id}.jpg"
         end
 
         @role = @sauna.sauna_roles.new

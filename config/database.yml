@@ -17,5 +17,3 @@ test:
 production:
   <<: *default
   database: soucial_production
-  username: soucial
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
