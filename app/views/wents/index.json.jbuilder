@@ -1,0 +1,1 @@
+partial: "wents/went", as: :went

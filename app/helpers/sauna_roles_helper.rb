@@ -1,0 +1,2 @@
+module SaunaRolesHelper
+end

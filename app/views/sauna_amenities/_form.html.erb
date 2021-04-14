@@ -1,0 +1,22 @@
+<%= form_with(model: sauna_amenity) do |form| %>
+  <% if sauna_amenity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sauna_amenity.errors.count, "error") %> prohibited this sauna_amenity from being saved:</h2>
+
+      <ul>
+        <% sauna_amenity.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name_ja %>
+    <%= form.text_field :name_ja %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

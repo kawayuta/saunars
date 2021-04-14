@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name ja:</strong>
+  <%= @sauna.name_ja %>
+  <%= @sauna.address %>
+  <%= @sauna.holiday %>
+  <%= @sauna.price %>
+  <%= @sauna.gender %>
+  <%= image_tag "/sauna_images/#{@sauna.id}.jpg" %>
+</p>
+
+# <h3>イッタ件数: <%= @sauna.wents %></h3>
+# <% if current_user.already_wented?(@sauna) %>
+#   <%= button_to 'イッタを取り消す', sauna_went_path(@sauna), method: :delete %>
+# <% else %>
+#   <%= button_to 'イッタ', sauna_wents_path(@sauna) %>
+# <% end %>
+# <h2>イッタしたユーザー</h2>
+# <% @sauna.wented_users.each do |user| %>
+#   <li><%= user.username %></li>
+# <% end %>
+
+<%= link_to 'Edit', edit_sauna_path(@sauna) %> |
+<%= link_to 'Back', saunas_path %>

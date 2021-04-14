@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sauna temperature:</strong>
+  <%= @sauna_room.sauna_temperature %>
+</p>
+
+<p>
+  <strong>Gender:</strong>
+  <%= @sauna_room.gender %>
+</p>
+
+<%= link_to 'Edit', edit_sauna_room_path(@sauna_room) %> |
+<%= link_to 'Back', sauna_rooms_path %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sauna Rooms</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sauna temperature</th>
+      <th>Gender</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sauna_rooms.each do |sauna_room| %>
+      <tr>
+        <td><%= sauna_room.sauna_temperature %></td>
+        <td><%= sauna_room.gender %></td>
+        <td><%= link_to 'Show', sauna_room %></td>
+        <td><%= link_to 'Edit', edit_sauna_room_path(sauna_room) %></td>
+        <td><%= link_to 'Destroy', sauna_room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sauna Room', new_sauna_room_path %>
