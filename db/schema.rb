@@ -91,10 +91,10 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.string "thumbnail"
     t.string "image"
     t.integer "price"
-    t.string "holiday"
-    t.string "tel"
-    t.string "parking"
-    t.string "hp"
+    t.text "holiday"
+    t.text "tel", size: :long
+    t.text "parking"
+    t.text "hp"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
