@@ -7,6 +7,7 @@ Rails.application.configure do
   config.cache_classes = true
   config.hosts << "saunar.herokuapp.com"
   config.hosts << "0.0.0.0"
+  config.hosts << "118.27.24.71"
 
 
   # Eager load code on boot. This eager loads most of Rails and
