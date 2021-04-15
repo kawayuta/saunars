@@ -187,9 +187,11 @@ loop do
             @sauna.parking = parking
             if @sauna.save
                 image_url = item.search('.p-saunaItem_image img').attribute('src')
-                file = MiniMagick::Image.open(image_url)
-                @sauna.image = file
-                @sauna.save
+                    unless image_url == "/assets/img/noimage.png"
+                        file = MiniMagick::Image.open(image_url)
+                    @sauna.image = file
+                    @sauna.save
+                end
                 # save_to_local = file.write  "public/sauna_images/#{@sauna.id}.jpg"
                 # save_to_local = file.write  "public/sauna_images/state/#{@sauna.id}.jpg"
             end
