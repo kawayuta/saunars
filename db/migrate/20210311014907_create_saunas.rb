@@ -11,9 +11,9 @@ class CreateSaunas < ActiveRecord::Migration[6.1]
       
       t.integer :price
       t.text :holiday
-      t.longtext :tel
+      t.text :tel
       t.text :parking
-      t.text :hp
+      t.longtext :hp
       
       t.timestamps
     end
