@@ -24,6 +24,7 @@ ADD Gemfile /saucial/Gemfile
 ADD Gemfile.lock /saucial/Gemfile.lock
 
 # bundle installの実行
+RUN gem install bundler
 RUN bundle install
 
 # ホストのアプリケーションディレクトリ内をすべてコンテナにコピー
