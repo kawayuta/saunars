@@ -176,102 +176,102 @@ loop do
                end
 
         unless Sauna.where(name_ja: name).present?
-        @sauna = Sauna.new
-        @sauna.name_ja = name
-        @sauna.address = address
-        @sauna.gender = gender
-        @sauna.holiday = holiday
-        @sauna.price = price
-        @sauna.tel = tel
-        @sauna.hp = hp
-        @sauna.parking = parking
-        if @sauna.save
-            image_url = item.search('.p-saunaItem_image img').attribute('src')
-            file = MiniMagick::Image.open(image_url)
-            @sauna.image = file
-            @sauna.save
-            # save_to_local = file.write  "public/sauna_images/#{@sauna.id}.jpg"
-            # save_to_local = file.write  "public/sauna_images/state/#{@sauna.id}.jpg"
-        end
-
-        @role = @sauna.sauna_roles.new
-        @role.loyly = loyly
-        @role.auto_loyly = auto_loyly
-        @role.self_loyly = self_loyly
-        @role.gaikiyoku = gaikiyoku
-        @role.rest_space = rest_space
-        @role.free_time = free_time
-        @role.capsule_hotel = capsule_hotel
-        @role.in_rest_space = in_rest_space
-        @role.eat_space = eat_space
-        @role.wifi = wifi
-        @role.power_source = power_source
-        @role.work_space = work_space
-        @role.manga = manga
-        @role.body_care = body_care
-        @role.body_towel = body_towel
-        @role.water_dispenser = water_dispenser
-        @role.washlet = washlet
-        @role.credit_settlement = credit_settlement
-        @role.parking_area = parking_area
-        @role.ganbanyoku = ganbanyoku
-        @role.tattoo = tattoo
-        @role.save
-
-
-        @amenities = @sauna.sauna_amenities.new
-        @amenities.shampoo = shampoo
-        @amenities.conditioner = conditioner
-        @amenities.body_soap = body_soap
-        @amenities.face_soap = face_soap
-        @amenities.razor = razor
-        @amenities.toothbrush = toothbrush
-        @amenities.nylon_towel = nylon_towel
-        @amenities.hairdryer = hairdryer
-        @amenities.face_towel_unlimited = face_towel_unlimited
-        @amenities.bath_towel_unlimited = bath_towel_unlimited
-        @amenities.sauna_underpants_unlimited = sauna_underpants_unlimited
-        @amenities.sauna_mat_unlimited = sauna_mat_unlimited
-        @amenities.flutterboard_unlimited = flutterboard_unlimited
-        @amenities.toner = toner
-        @amenities.emulsion = emulsion
-        @amenities.makeup_remover = makeup_remover
-        @amenities.cotton_swab = cotton_swab
-        @amenities.save
-
-
-        if !sauna_temperature_woman.empty?
-            @sauna_room_woman = @sauna.sauna_rooms.new
-            @sauna_room_woman.sauna_temperature = sauna_temperature_woman
-            @sauna_room_woman.mizu_temperature = mizu_temperature_woman
-            @sauna_room_woman.gender = 1
-            # 1 == woman (Room)
-            @sauna_room_woman.save
-        end
-
-
-        if !sauna_temperature_man.empty?
-            @sauna_room_man = @sauna.sauna_rooms.new
-            @sauna_room_man.sauna_temperature = sauna_temperature_man
-            @sauna_room_man.mizu_temperature = mizu_temperature_man
-            @sauna_room_man.gender = 0
-            # 0 == man (Room)
-            @sauna_room_man.save
-        end
-
-
-        tags.each { |item| 
-            title = item.text.gsub(/(\r\n?|\n)/,"").strip
-            if @sauna.sauna_tags.find_by(title: title).blank?
-                @sauna_tag = @sauna.sauna_tags.new
-                @sauna_tag.title = title
-                @sauna_tag.save
+            @sauna = Sauna.new
+            @sauna.name_ja = name
+            @sauna.address = address
+            @sauna.gender = gender
+            @sauna.holiday = holiday
+            @sauna.price = price
+            @sauna.tel = tel
+            @sauna.hp = hp
+            @sauna.parking = parking
+            if @sauna.save
+                image_url = item.search('.p-saunaItem_image img').attribute('src')
+                file = MiniMagick::Image.open(image_url)
+                @sauna.image = file
+                @sauna.save
+                # save_to_local = file.write  "public/sauna_images/#{@sauna.id}.jpg"
+                # save_to_local = file.write  "public/sauna_images/state/#{@sauna.id}.jpg"
             end
-        }
-        puts "追加した"
-    else 
-        puts "ある"
-    end
+
+            @role = @sauna.sauna_roles.new
+            @role.loyly = loyly
+            @role.auto_loyly = auto_loyly
+            @role.self_loyly = self_loyly
+            @role.gaikiyoku = gaikiyoku
+            @role.rest_space = rest_space
+            @role.free_time = free_time
+            @role.capsule_hotel = capsule_hotel
+            @role.in_rest_space = in_rest_space
+            @role.eat_space = eat_space
+            @role.wifi = wifi
+            @role.power_source = power_source
+            @role.work_space = work_space
+            @role.manga = manga
+            @role.body_care = body_care
+            @role.body_towel = body_towel
+            @role.water_dispenser = water_dispenser
+            @role.washlet = washlet
+            @role.credit_settlement = credit_settlement
+            @role.parking_area = parking_area
+            @role.ganbanyoku = ganbanyoku
+            @role.tattoo = tattoo
+            @role.save
+
+
+            @amenities = @sauna.sauna_amenities.new
+            @amenities.shampoo = shampoo
+            @amenities.conditioner = conditioner
+            @amenities.body_soap = body_soap
+            @amenities.face_soap = face_soap
+            @amenities.razor = razor
+            @amenities.toothbrush = toothbrush
+            @amenities.nylon_towel = nylon_towel
+            @amenities.hairdryer = hairdryer
+            @amenities.face_towel_unlimited = face_towel_unlimited
+            @amenities.bath_towel_unlimited = bath_towel_unlimited
+            @amenities.sauna_underpants_unlimited = sauna_underpants_unlimited
+            @amenities.sauna_mat_unlimited = sauna_mat_unlimited
+            @amenities.flutterboard_unlimited = flutterboard_unlimited
+            @amenities.toner = toner
+            @amenities.emulsion = emulsion
+            @amenities.makeup_remover = makeup_remover
+            @amenities.cotton_swab = cotton_swab
+            @amenities.save
+
+
+            if !sauna_temperature_woman.empty?
+                @sauna_room_woman = @sauna.sauna_rooms.new
+                @sauna_room_woman.sauna_temperature = sauna_temperature_woman
+                @sauna_room_woman.mizu_temperature = mizu_temperature_woman
+                @sauna_room_woman.gender = 1
+                # 1 == woman (Room)
+                @sauna_room_woman.save
+            end
+
+
+            if !sauna_temperature_man.empty?
+                @sauna_room_man = @sauna.sauna_rooms.new
+                @sauna_room_man.sauna_temperature = sauna_temperature_man
+                @sauna_room_man.mizu_temperature = mizu_temperature_man
+                @sauna_room_man.gender = 0
+                # 0 == man (Room)
+                @sauna_room_man.save
+            end
+
+
+            tags.each { |item| 
+                title = item.text.gsub(/(\r\n?|\n)/,"").strip
+                if @sauna.sauna_tags.find_by(title: title).blank?
+                    @sauna_tag = @sauna.sauna_tags.new
+                    @sauna_tag.title = title
+                    @sauna_tag.save
+                end
+            }
+            puts "#{name} - 追加した page#{count}"
+        else 
+            puts "#{name} - ある page#{count}"
+        end
 
     end
 

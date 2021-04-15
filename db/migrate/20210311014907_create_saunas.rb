@@ -1,7 +1,7 @@
 class CreateSaunas < ActiveRecord::Migration[6.1]
   def change
     create_table :saunas do |t|
-      t.string :name_ja
+      t.string :name_ja, unique: true
       t.string :name_en
       t.text :description
       t.text :address
