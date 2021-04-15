@@ -3,7 +3,8 @@ FROM ruby:2.6.7
 # リポジトリを更新し依存モジュールをインストール
 RUN apt-get update -qq && \
     apt-get install -y build-essential \
-                       nodejs
+                       nodejs \
+                       vim
 
 # yarnパッケージ管理ツールインストール
 RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
