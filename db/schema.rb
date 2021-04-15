@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_03_23_173533) do
 
-  create_table "sauna_amenities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sauna_amenities", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "sauna_id"
     t.boolean "shampoo", default: false
     t.boolean "conditioner", default: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.index ["sauna_id"], name: "index_sauna_amenities_on_sauna_id"
   end
 
-  create_table "sauna_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sauna_roles", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "sauna_id"
     t.boolean "loyly", default: false
     t.boolean "auto_loyly", default: false
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.index ["sauna_id"], name: "index_sauna_roles_on_sauna_id"
   end
 
-  create_table "sauna_rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sauna_rooms", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "sauna_id"
     t.integer "sauna_temperature"
     t.integer "mizu_temperature"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.index ["sauna_id"], name: "index_sauna_rooms_on_sauna_id"
   end
 
-  create_table "sauna_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "sauna_tags", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "sauna_id"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.index ["sauna_id"], name: "index_sauna_tags_on_sauna_id"
   end
 
-  create_table "saunas", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "saunas", charset: "utf8mb4", force: :cascade do |t|
     t.string "name_ja"
     t.string "name_en"
     t.text "description"
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
-  create_table "wents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "wents", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "sauna_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
