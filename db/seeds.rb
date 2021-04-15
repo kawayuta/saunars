@@ -195,7 +195,9 @@ loop do
                     @sauna.save
                     # 例外オブジェクトを変数 error に代入
                     rescue => error
-                        # 変数の値を表示
+                        file = MiniMagick::Image.open("https://sauna-image.s3-ap-northeast-1.amazonaws.com/notfound.png")
+                        @sauna.image = file
+                        @sauna.save
                         puts error
                     end
                 # save_to_local = file.write  "public/sauna_images/#{@sauna.id}.jpg"
