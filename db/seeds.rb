@@ -195,7 +195,7 @@ loop do
                     @sauna.save
                     # 例外オブジェクトを変数 error に代入
                     rescue => error
-                        file = MiniMagick::Image.open("https://sauna-image.s3-ap-northeast-1.amazonaws.com/notfound.png")
+                        file = MiniMagick::Image.open("https://assets-image-sauna.s3-ap-northeast-1.amazonaws.com/notfound.png")
                         @sauna.image = file
                         @sauna.save
                         puts error
