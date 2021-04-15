@@ -10,10 +10,10 @@ class CreateSaunas < ActiveRecord::Migration[6.1]
       t.string :image
       
       t.integer :price
-      t.string :holiday
-      t.string :tel
-      t.string :parking
-      t.string :hp
+      t.text :holiday
+      t.text :tel
+      t.text :parking
+      t.text :hp
       
       t.timestamps
     end
