@@ -8,7 +8,7 @@ Rails.application.configure do
   config.hosts << "saunar.herokuapp.com"
   config.hosts << "0.0.0.0"
   config.hosts << "118.27.24.71"
-
+  config.hosts << "o9sec.com"
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
