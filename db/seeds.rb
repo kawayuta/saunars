@@ -186,12 +186,18 @@ loop do
             @sauna.hp = hp
             @sauna.parking = parking
             if @sauna.save
-                image_url = item.search('.p-saunaItem_image img').attribute('src')
-                    unless image_url == "/assets/img/noimage.png"
-                        file = MiniMagick::Image.open(image_url)
+                
+                    begin
+                    # エラーを起こす可能性のあるコード
+                    image_url = item.search('.p-saunaItem_image img').attribute('src')
+                    file = MiniMagick::Image.open(image_url)
                     @sauna.image = file
                     @sauna.save
-                end
+                    # 例外オブジェクトを変数 error に代入
+                    rescue => error
+                        # 変数の値を表示
+                        puts error
+                    end
                 # save_to_local = file.write  "public/sauna_images/#{@sauna.id}.jpg"
                 # save_to_local = file.write  "public/sauna_images/state/#{@sauna.id}.jpg"
             end
