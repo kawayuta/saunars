@@ -12,7 +12,7 @@ require 'nokogiri'
 require "mini_magick"
 count = 1
 
-# loop do
+loop do
 
     url = "https://sauna-ikitai.com/search?page=#{count}"
     charset = nil
@@ -175,6 +175,7 @@ count = 1
                     #other
                end
 
+        unless Sauna.where(name_ja: name).present?
         @sauna = Sauna.new
         @sauna.name_ja = name
         @sauna.address = address
@@ -267,11 +268,13 @@ count = 1
                 @sauna_tag.save
             end
         }
+        puts "追加した"
+    else 
+        puts "ある"
+    end
 
-       end
+    end
 
-
-
-#     count += 1
-# end
+    count += 1
+end
 
