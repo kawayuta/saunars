@@ -12,13 +12,8 @@ class SaunasController < ApplicationController
   end
 
   def search
-     if search_params["name_ja_or_address_cont"] == ""
-      @q = Sauna.ransack(search_params)
-      @search_saunas = @q.result(distinct: true)
-     else
-      @search_saunas = Sauna.all.limit(10)
-     end
-     
+    @q = Sauna.ransack(search_params)
+    @search_saunas = @q.result(distinct: true)
   end
 
   # GET /saunas/1 or /saunas/1.json
