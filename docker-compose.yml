@@ -13,6 +13,8 @@ services:
       - log-data:/saucial/log
     depends_on:
       - db
+    environment:
+      RAILS_ENV: 'production'
   db:
     image: mysql:5.7
     env_file:
