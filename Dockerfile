@@ -26,7 +26,7 @@ ADD Gemfile.lock /saucial/Gemfile.lock
 
 
 ENV http_proxy http://:118.27.24.71:80
-ENV https_proxy https://118.27.24.71:443
+# ENV https_proxy https://118.27.24.71:443
 ENV no_proxy 127.0.0.1, localhost, 192.168.1.1
 
 # bundle installの実行
