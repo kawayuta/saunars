@@ -22,13 +22,8 @@ WORKDIR /saucial
 
 # ホストのGemfileとGemfile.lockをコンテナにコピー
 ADD Gemfile /saucial/Gemfile
-ADD Gemfile.lock /saucial/Gemfile.lock
-
-
-# ENV http_proxy http://root:Mirainoyuuta2116!@118.27.24.71:8080
-# ENV https_proxy https://118.27.24.71:443
-ENV no_proxy 127.0.0.1, localhost, 192.168.1.1
-
+ADD Gemfile.lock /saucial/Gemfile.lockç∂
+∂
 # bundle installの実行
 RUN gem install bundler
 RUN bundle install
