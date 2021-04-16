@@ -34,6 +34,4 @@ ADD . /saucial
 # puma.sockを配置するディレクトリを作成
 RUN mkdir -p tmp/sockets
 
-ENV http_proxy http://:118.27.24.71:8080
-ENV https_proxy http://118.27.24.71:8080
-ENV no_proxy 127.0.0.1, localhost, 192.168.1.1
+ENV NO_PROXY="127.0.0.1, localhost, 192.168.1.1"
