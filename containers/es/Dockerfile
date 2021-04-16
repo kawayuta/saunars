@@ -4,5 +4,5 @@ FROM docker.elastic.co/elasticsearch/elasticsearch:6.5.4
 
 
 # Nginxの設定ファイルをコンテナにコピー
-ADD elasticsearch-analysis-kuromoji-2.7.0.zip /etc/
-RUN bin/elasticsearch-plugin install /etc/elasticsearch-analysis-kuromoji-2.7.0.zip
+COPY elasticsearch-analysis-kuromoji-2.7.0.zip /tmp
+RUN bin/elasticsearch-plugin install file:///tmp/elasticsearch-analysis-kuromoji-2.7.0.zip
