@@ -30,7 +30,7 @@ ADD Gemfile.lock /saucial/Gemfile.lock
 ENV no_proxy 127.0.0.1, localhost, 192.168.1.1
 
 # bundle installの実行
-# RUN gem install bundler
+RUN gem install bundler
 RUN bundle install
 
 # ホストのアプリケーションディレクトリ内をすべてコンテナにコピー
