@@ -1,4 +1,7 @@
 class Sauna < ApplicationRecord
+
+    include SaunaSearchable
+
     has_many :sauna_roles, dependent: :destroy
     has_many :sauna_amenities, dependent: :destroy
     has_many :sauna_rooms, dependent: :destroy

@@ -9,14 +9,17 @@ class SaunasController < ApplicationController
         @saunas = Sauna.all.limit(30)
       end
     end
+
+    word = params[:search_word].to_s
+    @saunas = Sauna.es_search(word).records
   end
 
   def search
     if search_params[:name_ja_or_address_cont] == ""
       @search_saunas = Sauna.all.limit(25)
     else
-      @q = Sauna.ransack(search_params)
-      @search_saunas = @q.result(distinct: true)
+      word = search_params[:name_ja_or_address_cont].to_s
+      @search_saunas = Sauna.es_search(word).records.ransack(search_params).result(distinct: true)
     end
   end
 
@@ -81,6 +84,7 @@ class SaunasController < ApplicationController
     def sauna_params
       params.require(:sauna).permit(:name_ja, :address)
     end
+
 
     def search_params
       params.require(:q).permit(

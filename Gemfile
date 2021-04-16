@@ -35,7 +35,8 @@ gem 'ransack'
 
 gem 'carrierwave'
 gem 'fog-aws'
-
+gem 'elasticsearch-model', github: 'elasticsearch/elasticsearch-rails', branch: '6.x'
+gem 'elasticsearch-rails', github: 'elasticsearch/elasticsearch-rails', branch: '6.x'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

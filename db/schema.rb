@@ -92,9 +92,9 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.string "image"
     t.integer "price"
     t.text "holiday"
-    t.text "tel", size: :long
+    t.text "tel"
     t.text "parking"
-    t.text "hp"
+    t.text "hp", size: :long
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

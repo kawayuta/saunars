@@ -192,6 +192,7 @@ loop do
                     image_url = item.search('.p-saunaItem_image img').attribute('src')
                     file = MiniMagick::Image.open(image_url)
                     @sauna.image = file
+                    puts @sauna.image_url
                     @sauna.save
                     # 例外オブジェクトを変数 error に代入
                     rescue => error

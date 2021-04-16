@@ -8,7 +8,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    "#{model.id}"
+    if Rails.env.development?
+      "uploads/#{model.id}"
+    elsif Rails.env.test?
+      "uploads/#{model.id}"
+    else
+      "#{model.id}"
+    end
   end
 
   def extension_whitelist
