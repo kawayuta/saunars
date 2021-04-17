@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_173533) do
+ActiveRecord::Schema.define(version: 2021_04_17_095259) do
 
   create_table "sauna_amenities", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "sauna_id"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2021_03_23_173533) do
     t.text "hp", size: :long
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "latitude"
+    t.float "longitude"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|

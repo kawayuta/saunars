@@ -186,7 +186,7 @@ loop do
             @sauna.hp = hp
             @sauna.parking = parking
             if @sauna.save
-                
+                    puts @sauna.latitude
                     begin
                     # エラーを起こす可能性のあるコード
                     image_url = item.search('.p-saunaItem_image img').attribute('src')

@@ -11,4 +11,7 @@ class Sauna < ApplicationRecord
     has_many :wented_saunas, through: :wents, source: :user
 
     mount_uploader :image, ImageUploader
+
+    geocoded_by :address
+    after_validation :geocode, if: :address_changed?
 end

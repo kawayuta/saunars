@@ -1,3 +1,6 @@
+require 'uri'
+require "addressable/uri"
+
 class SaunasController < ApplicationController
   before_action :set_sauna, only: %i[ show edit update destroy ]
   # before_action :authenticate_user!

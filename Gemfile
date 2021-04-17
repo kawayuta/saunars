@@ -32,7 +32,7 @@ gem 'rack-cors'
 gem "mini_magick"
 gem 'nokogiri'
 gem 'ransack'
-
+gem 'geocoder'
 gem 'carrierwave'
 gem 'fog-aws'
 gem 'elasticsearch-model', github: 'elasticsearch/elasticsearch-rails', branch: '6.x'
