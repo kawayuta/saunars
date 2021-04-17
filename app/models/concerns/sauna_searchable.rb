@@ -55,7 +55,7 @@ module SaunaSearchable
                   ]
                 }
               },
-              size: 1000
+              size: 300
         })
       end
     end
