@@ -62,11 +62,10 @@ module SaunaSearchable
         "query": {
           "function_score": {
             "query": { "match_all": {} },
-            "boost": "5", 
+            "boost": 1, 
             "functions": [
               {
                 "filter": { "match": { "name_ja": query } },
-                "random_score": {}, 
                 "weight": 3
               },
               {
