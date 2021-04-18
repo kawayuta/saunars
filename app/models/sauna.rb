@@ -14,4 +14,39 @@ class Sauna < ApplicationRecord
 
     geocoded_by :address
     after_validation :geocode, if: :address_changed?
+
+
+    class << self
+        def sort_by_distance(lat, lon)
+          body = {
+            sort: {
+              _geo_distance: {
+                location: {
+                  lat: lat,
+                  lon: lon,
+                },
+                order: 'asc',
+                unit: 'meters',
+              }
+            },
+            script_fields: calc_distance_script(lat, lon),
+          }
+    
+          Spot.__elasticsearch__.search(body)
+        end
+    
+        private
+    
+        def calc_distance_script(lat, lon)
+          { distance: {
+              params: {
+                lat: lat,
+                lon: lon,
+              },
+              script: "doc['location'].distance(lat,lon)", # 点[lat, lon] からの距離をメートル単位で算出
+            }
+          }
+        end
+      end
+    
 end

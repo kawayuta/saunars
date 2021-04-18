@@ -12,6 +12,9 @@ module SaunaSearchable
         mappings dynamic: 'false' do
           indexes :name_ja,             type: 'text', analyzer: 'kuromoji'
           indexes :address,                type: 'text', analyzer: 'kuromoji'
+          indexes :latitude,                type: 'double'
+          indexes :longitude,                type: 'double'
+          indexes :location,                type: 'geo_point'
         end
       end
   
@@ -19,7 +22,8 @@ module SaunaSearchable
       def as_indexed_json(*)
         attributes
         .symbolize_keys
-        .slice(:name_ja, :address)
+        .slice(:name_ja, :address, :latitude, :longitude)
+        .merge(location: "#{latitude},#{longitude}")
       end
     end
   
@@ -37,26 +41,87 @@ module SaunaSearchable
                               })
       end
 
-      def es_search(query)
+      def es_search(query, lat, lon, radius)
         __elasticsearch__.search({
-            "query": {
-                "bool": {
-                  "should": [
-                    {
-                        "term": {
-                            "name_ja": query,
-                        }
-                    },
-                    {
-                        "term": {
-                          "address": query
-                        }
-                    }
-                  ]
-                }
+        #     "query": {
+        #         "bool": {
+        #           "should": [
+        #             {
+        #                 "term": {
+        #                     "name_ja": query,
+        #                 }
+        #             },
+        #             {
+        #                 "term": {
+        #                   "address": query
+        #                 }
+        #             }
+        #           ]
+        #         }
+        #       },
+        "query": {
+          "function_score": {
+            "query": { "match_all": {} },
+            "boost": "5", 
+            "functions": [
+              {
+                "filter": { "match": { "name_ja": query } },
+                "random_score": {}, 
+                "weight": 3
               },
-              size: 200
+              {
+                "filter": { "match": { "address": query } },
+                "weight": 3
+              },
+              {
+                "filter": {
+                        "geo_distance": {
+                            "distance": "#{radius}km",
+                            "location": {
+                                "lat": lat,
+                                "lon": lon
+                            }
+                        }
+                },
+                "weight": 2
+              }
+            ],
+            "max_boost": 5,
+            "score_mode": "max",
+            "boost_mode": "multiply",
+            "min_score": 2
+          }
+        },
+        "sort": [
+          "_score",
+          {
+            "_geo_distance": {
+              "location": {
+                "lat": lat,
+                "lon": lon,
+              },
+              "order": 'asc',
+              "unit": 'meters',
+            }
+          },
+        ],
+        "size": 200
         })
       end
+
+      private
+
+      def calc_distance_script(lat, lon)
+        { distance: {
+            params: {
+              latitude: lat,
+              longitude: lon,
+            },
+            script: "doc['location'].distance(lat,lon)", # 点[lat, lon] からの距離をメートル単位で算出
+          }
+        }
+      end
+      
+      
     end
   end

@@ -18,12 +18,11 @@ class SaunasController < ApplicationController
   end
 
   def search
-    if search_params[:name_ja_or_address_cont] == ""
-      @search_saunas = Sauna.all.limit(25)
-    else
-      word = search_params[:name_ja_or_address_cont].to_s
-      @search_saunas = Sauna.es_search(word).records.ransack(search_params).result(distinct: true)
-    end
+    word = search_params[:name_ja_or_address_cont].to_s
+    latitude = params[:latitude].to_f
+    longitude = params[:longitude].to_f
+    radius = params[:radius].to_i
+    @search_saunas = Sauna.es_search(word, latitude, longitude, radius).records.ransack(search_params).result(distinct: true)
   end
 
   # GET /saunas/1 or /saunas/1.json
