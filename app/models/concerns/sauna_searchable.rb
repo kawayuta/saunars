@@ -43,22 +43,6 @@ module SaunaSearchable
 
       def es_search(query, lat, lon, radius)
         __elasticsearch__.search({
-        #     "query": {
-        #         "bool": {
-        #           "should": [
-        #             {
-        #                 "term": {
-        #                     "name_ja": query,
-        #                 }
-        #             },
-        #             {
-        #                 "term": {
-        #                   "address": query
-        #                 }
-        #             }
-        #           ]
-        #         }
-        #       },
         "query": {
           "function_score": {
             "query": { "match_all": {} },
