@@ -26,7 +26,7 @@ class SaunasController < ApplicationController
     radius = params[:radius].to_i
     sortType = params[:sortType].to_s
 
-    if currentLatitude.blank? || currentLongitude.blank?
+    if currentLatitude == 0 || currentLongitude == 0
     # version 1.0
       @search_saunas = Sauna.es_search(word, latitude, longitude, radius).records.ransack(search_params).result(distinct: true)
     else
