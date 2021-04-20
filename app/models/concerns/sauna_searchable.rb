@@ -12,6 +12,7 @@ module SaunaSearchable
         mappings dynamic: 'false' do
           indexes :name_ja,             type: 'text', analyzer: 'kuromoji'
           indexes :address,                type: 'text', analyzer: 'kuromoji'
+          indexes :price,                type: 'integer'
           indexes :latitude,                type: 'double'
           indexes :longitude,                type: 'double'
           indexes :location,                type: 'geo_point'
@@ -22,7 +23,7 @@ module SaunaSearchable
       def as_indexed_json(*)
         attributes
         .symbolize_keys
-        .slice(:name_ja, :address, :latitude, :longitude)
+        .slice(:name_ja, :address, :latitude, :longitude, :price)
         .merge(location: "#{latitude},#{longitude}")
       end
     end
@@ -39,6 +40,104 @@ module SaunaSearchable
                                   settings: self.settings.to_hash,
                                   mappings: self.mappings.to_hash
                               })
+      end
+
+
+      def es_price_search(query, lat, lon, radius, sortType)
+        __elasticsearch__.search({
+        "query": {
+          "function_score": {
+            "query": { "match_all": {} },
+            "boost": 1, 
+            "functions": [
+              {
+                "filter": { "match": { "name_ja": query } },
+                "weight": 3
+              },
+              {
+                "filter": { "match": { "address": query } },
+                "weight": 3
+              },
+              {
+                "filter": {
+                        "geo_distance": {
+                            "distance": "#{radius}km",
+                            "location": {
+                                "lat": lat,
+                                "lon": lon
+                            }
+                        }
+                },
+                "weight": 2
+              }
+            ],
+            "max_boost": 5,
+            "score_mode": "max",
+            "boost_mode": "multiply",
+            "min_score": 2
+          }
+        },
+        "sort": [
+          "_score",
+          {
+            "price": {
+              "order": (sortType == "1" ? "asc" : "desc"),
+            }
+          },
+        ],
+        "size": 200
+        })
+      end
+
+      def es_currentLocation_search(query, lat, lon, radius, currentLatitude, currentLongitude, sortType)
+        __elasticsearch__.search({
+        "query": {
+          "function_score": {
+            "query": { "match_all": {} },
+            "boost": 1, 
+            "functions": [
+              {
+                "filter": { "match": { "name_ja": query } },
+                "weight": 3
+              },
+              {
+                "filter": { "match": { "address": query } },
+                "weight": 3
+              },
+              {
+                "filter": {
+                        "geo_distance": {
+                            "distance": "#{radius}km",
+                            "location": {
+                                "lat": lat,
+                                "lon": lon
+                            }
+                        }
+                },
+                "weight": 2
+              }
+            ],
+            "max_boost": 5,
+            "score_mode": "max",
+            "boost_mode": "multiply",
+            "min_score": 2
+          }
+        },
+        "sort": [
+          "_score",
+          {
+            "_geo_distance": {
+              "location": {
+                "lat": currentLatitude,
+                "lon": currentLongitude,
+              },
+              "order": 'asc',
+              "unit": 'meters',
+            }
+          },
+        ],
+        "size": 200
+        })
       end
 
       def es_search(query, lat, lon, radius)

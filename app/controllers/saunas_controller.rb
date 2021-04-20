@@ -21,8 +21,22 @@ class SaunasController < ApplicationController
     word = search_params[:name_ja_or_address_cont].to_s
     latitude = params[:latitude].to_f
     longitude = params[:longitude].to_f
+    currentLatitude = params[:currentLatitude].to_f
+    currentLongitude = params[:currentLongitude].to_f
     radius = params[:radius].to_i
-    @search_saunas = Sauna.es_search(word, latitude, longitude, radius).records.ransack(search_params).result(distinct: true)
+    sortType = params[:sortType].to_s
+
+    if currentLatitude.blank? || currentLongitude.blank?
+    # version 1.0
+      @search_saunas = Sauna.es_search(word, latitude, longitude, radius).records.ransack(search_params).result(distinct: true)
+    else
+      # version 2.0
+      if sortType == "0"
+        @search_saunas = Sauna.es_currentLocation_search(word, latitude, longitude, radius, currentLatitude, currentLongitude, sortType).records.ransack(search_params).result(distinct: true)
+      elsif sortType == "1" || sortType == "2"
+        @search_saunas = Sauna.es_price_search(word, latitude, longitude, radius, sortType).records.ransack(search_params).result(distinct: true)
+      end
+    end
   end
 
   # GET /saunas/1 or /saunas/1.json
