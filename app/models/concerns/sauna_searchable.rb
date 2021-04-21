@@ -131,7 +131,7 @@ module SaunaSearchable
                 "lat": currentLatitude,
                 "lon": currentLongitude,
               },
-              "order": 'asc',
+              "order": 'desc',
               "unit": 'meters',
             }
           },
