@@ -5,6 +5,7 @@ class WentsController < ApplicationController
     before_action :authenticate_user!
 
     def show 
+      render json: { is_went: current_user.wents.find_by(sauna_id: params[:id]).present?}
     end
 
 
