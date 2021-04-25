@@ -43,6 +43,58 @@ module SaunaSearchable
       end
 
 
+      def es_incremental_search(query, lat, lon, radius, currentLatitude, currentLongitude, sortType)
+        __elasticsearch__.search({
+        "query": {
+          "function_score": {
+            "query": { "match_all": {} },
+            "boost": 1, 
+            "functions": [
+              {
+                "filter": { "match": { "name_ja": query } },
+                "weight": 3
+              },
+              {
+                "filter": { "match": { "address": query } },
+                "weight": 3
+              },
+              {
+                "filter": {
+                        "geo_distance": {
+                            "distance": "#{radius}km",
+                            "location": {
+                                "lat": lat,
+                                "lon": lon
+                            }
+                        }
+                },
+                "weight": 2
+              }
+            ],
+            "max_boost": 5,
+            "score_mode": "max",
+            "boost_mode": "multiply",
+            "min_score": 2
+          }
+        },
+        "sort": [
+          "_score",
+          {
+            "_geo_distance": {
+              "location": {
+                "lat": currentLatitude,
+                "lon": currentLongitude,
+              },
+              "order": 'desc',
+              "unit": 'meters',
+            }
+          },
+        ],
+        "size": 30
+        })
+      end
+
+
       def es_price_search(query, lat, lon, radius, sortType)
         __elasticsearch__.search({
         "query": {

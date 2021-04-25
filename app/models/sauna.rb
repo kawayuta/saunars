@@ -9,6 +9,10 @@ class Sauna < ApplicationRecord
 
     has_many :wents
     has_many :wented_saunas, through: :wents, source: :user
+    has_many :activities
+    has_many :activityed_saunas, through: :activities, source: :user
+    has_many :reviews, dependent: :destroy
+    has_many :reviewed_saunas, through: :activities, source: :user
 
     mount_uploader :image, ImageUploader
 

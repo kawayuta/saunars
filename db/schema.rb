@@ -10,7 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_17_095259) do
+ActiveRecord::Schema.define(version: 2021_04_22_190050) do
+
+  create_table "activities", charset: "utf8mb4", force: :cascade do |t|
+    t.text "body"
+    t.string "image"
+    t.integer "sauna_time"
+    t.integer "sauna_count"
+    t.integer "mizuburo_time"
+    t.integer "mizuburo_count"
+    t.integer "rest_time"
+    t.integer "rest_count"
+    t.bigint "sauna_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "review_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["review_id"], name: "index_activities_on_review_id"
+    t.index ["sauna_id"], name: "index_activities_on_sauna_id"
+    t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "reviews", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "cleanliness"
+    t.integer "customer_service"
+    t.integer "equipment"
+    t.integer "customer_manner"
+    t.integer "cost_performance"
+    t.bigint "sauna_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sauna_id"], name: "index_reviews_on_sauna_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
 
   create_table "sauna_amenities", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "sauna_id"
@@ -130,6 +163,11 @@ ActiveRecord::Schema.define(version: 2021_04_17_095259) do
     t.index ["user_id"], name: "index_wents_on_user_id"
   end
 
+  add_foreign_key "activities", "reviews"
+  add_foreign_key "activities", "saunas"
+  add_foreign_key "activities", "users"
+  add_foreign_key "reviews", "saunas"
+  add_foreign_key "reviews", "users"
   add_foreign_key "sauna_amenities", "saunas"
   add_foreign_key "sauna_roles", "saunas"
   add_foreign_key "sauna_rooms", "saunas"

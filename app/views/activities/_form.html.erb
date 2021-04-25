@@ -1,0 +1,57 @@
+<%= form_with(model: activity) do |form| %>
+  <% if activity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+
+      <ul>
+        <% activity.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.text_field :image %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sauna_time %>
+    <%= form.number_field :sauna_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :count %>
+    <%= form.number_field :count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mizuburo_time %>
+    <%= form.number_field :mizuburo_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mizuburo_count %>
+    <%= form.number_field :mizuburo_count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rest_time %>
+    <%= form.number_field :rest_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rest_time %>
+    <%= form.text_field :rest_time %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   resources :sauna_rooms
   resources :sauna_amenities
   resources :sauna_roles
+  resources :reviews
+  resources :activities
   resources :saunas do
     get :search , on: :collection
+    get :incremental_search , on: :collection
   end
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
@@ -14,6 +17,7 @@ Rails.application.routes.draw do
   root 'users#index'
 
   get 'search', to: 'saunas#search'
+  get 'incremental_search', to: 'saunas#incremental_search'
 
   resources :wents, only: [:create, :show, :destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

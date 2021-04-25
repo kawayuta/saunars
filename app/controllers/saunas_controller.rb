@@ -39,6 +39,19 @@ class SaunasController < ApplicationController
     end
   end
 
+  def incremental_search
+    word = search_params[:name_ja_or_address_cont].to_s
+    latitude = params[:latitude].to_f
+    longitude = params[:longitude].to_f
+    currentLatitude = params[:currentLatitude].to_f
+    currentLongitude = params[:currentLongitude].to_f
+    radius = params[:radius].to_i
+    sortType = params[:sortType].to_s
+    @incremental_search = Sauna.es_incremental_search(word, latitude, longitude, radius, currentLatitude, currentLongitude, sortType).records.ransack(search_params).result(distinct: true)
+    render json: @incremental_search
+
+  end
+
   # GET /saunas/1 or /saunas/1.json
   def show
     

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @activity.body %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @activity.image %>
+</p>
+
+<p>
+  <strong>Sauna time:</strong>
+  <%= @activity.sauna_time %>
+</p>
+
+<p>
+  <strong>Count:</strong>
+  <%= @activity.count %>
+</p>
+
+<p>
+  <strong>Mizuburo time:</strong>
+  <%= @activity.mizuburo_time %>
+</p>
+
+<p>
+  <strong>Mizuburo count:</strong>
+  <%= @activity.mizuburo_count %>
+</p>
+
+<p>
+  <strong>Rest time:</strong>
+  <%= @activity.rest_time %>
+</p>
+
+<p>
+  <strong>Rest time:</strong>
+  <%= @activity.rest_time %>
+</p>
+
+<%= link_to 'Edit', edit_activity_path(@activity) %> |
+<%= link_to 'Back', activities_path %>
