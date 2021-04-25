@@ -4,3 +4,4 @@ json.is_went signed_in? ? sauna.wents.find_by(user_id: current_user.id).present?
 json.rooms sauna.sauna_rooms
 json.roles sauna.sauna_roles
 json.amenities sauna.sauna_amenities
+json.reviews sauna.reviews.order(id: :DESC).limit(10)
