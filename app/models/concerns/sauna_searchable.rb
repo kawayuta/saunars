@@ -89,8 +89,7 @@ module SaunaSearchable
               "unit": 'meters',
             }
           },
-        ],
-        "size": 300
+        ]
         })
       end
 
