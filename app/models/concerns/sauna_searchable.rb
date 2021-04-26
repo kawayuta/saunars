@@ -30,7 +30,7 @@ module SaunaSearchable
       # ②マッピング情報
       settings do
         mappings dynamic: 'false' do
-          indexes :name_ja,             type: 'text'
+          indexes :name_ja,             type: 'text', analyzer: 'kuromoji'
           indexes :address,                type: 'text', analyzer: 'kuromoji'
           indexes :price,                type: 'integer'
           indexes :latitude,                type: 'double'
