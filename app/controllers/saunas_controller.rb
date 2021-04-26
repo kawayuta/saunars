@@ -48,7 +48,7 @@ class SaunasController < ApplicationController
     radius = params[:radius].to_i
     sortType = params[:sortType].to_s
     @incremental_search = Sauna.es_incremental_search(word, latitude, longitude, radius, currentLatitude, currentLongitude, sortType).records.ransack(search_params).result(distinct: true)
-    render json: @incremental_search.limit(50)
+    render json: @incremental_search
 
   end
 
