@@ -26,7 +26,7 @@ module SaunaSearchable
       #     indexes :longitude,                type: 'double'
       #     indexes :location,                type: 'geo_point'
       #   end
-      # end
+      end
       # ②マッピング情報
       settings do
         mappings dynamic: 'false' do
@@ -110,7 +110,7 @@ module SaunaSearchable
             }
           },
         ],
-        "size": 30
+        "size": 300
         })
       end
 
