@@ -19,8 +19,8 @@ module SaunaSearchable
               filter: ["kuromoji_baseform", "pos_filter", "greek_lowercase_filter", "cjk_width"]}}
           }} do
         mapping do
-          indexes :name_ja,             type: 'text', analyzer: 'kuromoji'
-          indexes :address,                type: 'text', analyzer: 'kuromoji'
+          indexes :name_ja,             type: 'text'
+          indexes :address,                type: 'text'
           indexes :price,                type: 'integer'
           indexes :latitude,                type: 'double'
           indexes :longitude,                type: 'double'
