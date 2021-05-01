@@ -38,6 +38,9 @@ gem 'fog-aws'
 gem 'elasticsearch-model', github: 'elasticsearch/elasticsearch-rails', branch: '6.x'
 gem 'elasticsearch-rails', github: 'elasticsearch/elasticsearch-rails', branch: '6.x'
 gem 'feedbag'
+gem 'sidekiq'
+gem 'redis'
+gem 'redis-namespace'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

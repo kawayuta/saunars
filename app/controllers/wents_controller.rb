@@ -10,20 +10,23 @@ class WentsController < ApplicationController
 
 
     def create
-        @went = current_user.wents.new(went_params)
-
-        respond_to do |format|
-          if @went.save
-            format.json { render :show, status: 200, location: @went }
-          else
-            format.json { render json: @went.errors, status: 404 }
-          end
-        end
+        SaunaWentWorker.perform_async("create", current_user.id, went_params[:sauna_id])
+        # @went = current_user.wents.new(went_params)
+        
+        # respond_to do |format|
+        #   if @went.save
+        #     format.json { render :show, status: 200, location: @went }
+        #   else
+        #     format.json { render json: @went.errors, status: 404 }
+        #   end
+        # end
       end
     
       def destroy
-        @went = Went.find_by(sauna_id: params[:sauna_id], user_id: current_user.id)
-        @went.destroy
+
+        SaunaWentWorker.perform_async("destroy", current_user.id, went_params[:sauna_id])
+        # @went = Went.find_by(sauna_id: params[:sauna_id], user_id: current_user.id)
+        # @went.destroy
         # redirect_back(fallback_location: root_path)
       end
 

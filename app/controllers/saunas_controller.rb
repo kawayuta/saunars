@@ -3,7 +3,7 @@ require "addressable/uri"
 
 class SaunasController < ApplicationController
   before_action :set_sauna, only: %i[ show edit update destroy ]
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   # GET /saunas or /saunas.json
   def index
     unless params[:sort].blank?
@@ -49,6 +49,23 @@ class SaunasController < ApplicationController
     sortType = params[:sortType].to_s
     @incremental_search = Sauna.es_incremental_search(word, latitude, longitude, radius, currentLatitude, currentLongitude, sortType).records.ransack(search_params).result(distinct: true)
     render json: @incremental_search
+  end
+
+  def recommend
+    word = search_params[:name_ja_or_address_cont].to_s
+    latitude = params[:latitude].to_f
+    longitude = params[:longitude].to_f
+    currentLatitude = params[:currentLatitude].to_f
+    currentLongitude = params[:currentLongitude].to_f
+    radius = params[:radius].to_i
+    sortType = params[:sortType].to_s
+    wents = current_user.wents.limit(30).shuffle.pluck(:sauna_id)
+
+    if wents.count > 4
+      @recommend_saunas = Sauna.es_recommend_currentLocation_search(wents, currentLatitude, currentLongitude).records
+    else
+      @recommend_saunas = Sauna.es_currentLocation_search(word, latitude, longitude, radius, currentLatitude, currentLongitude, sortType).records.ransack(search_params).result(distinct: true).limit(10)
+    end
   end
 
   # GET /saunas/1 or /saunas/1.json
@@ -113,6 +130,10 @@ class SaunasController < ApplicationController
       params.require(:sauna).permit(:name_ja, :address)
     end
 
+
+    def recommend_params
+      params.permit(ids: [])
+    end
 
     def search_params
       params.require(:q).permit(

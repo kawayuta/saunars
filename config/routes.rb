@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   resources :sauna_tags
   resources :sauna_rooms
@@ -8,6 +10,7 @@ Rails.application.routes.draw do
   resources :saunas do
     get :search , on: :collection
     get :incremental_search , on: :collection
+    get :recommend , on: :collection
   end
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
@@ -29,4 +32,7 @@ Rails.application.routes.draw do
         sessions: 'api/auth/sessions',
     }
  end
+
+ mount Sidekiq::Web, at: '/sidekiq'
+
 end
