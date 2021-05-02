@@ -24,7 +24,7 @@ class WentsController < ApplicationController
     
       def destroy
 
-        SaunaWentWorker.perform_async("destroy", current_user.id, went_params[:sauna_id])
+        SaunaWentWorker.perform_async("destroy", current_user.id, params[:sauna_id])
         # @went = Went.find_by(sauna_id: params[:sauna_id], user_id: current_user.id)
         # @went.destroy
         # redirect_back(fallback_location: root_path)

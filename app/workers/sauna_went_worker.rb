@@ -4,10 +4,18 @@ class SaunaWentWorker
   def perform(action, user_id, sauna_id)
     
     if action == "create"
-      Went.create(sauna_id: sauna_id, user_id: user_id)
+      unless Went.find_by(sauna_id: sauna_id, user_id: user_id).present?
+        Went.create(sauna_id: sauna_id, user_id: user_id)
+        puts "いきたい"
+      else
+        puts "いきたい済み"
+      end
     elsif action == "destroy"
       went = Went.find_by(sauna_id: sauna_id, user_id: user_id)
-      went.destroy
+      if went.present?
+        went.destroy
+        puts "いきたい取り消し"
+      end
     end
 
   end
