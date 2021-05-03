@@ -72,6 +72,10 @@ module SaunaSearchable
           longitude: self.longitude,
           location: "#{self.latitude},#{self.longitude}",
 
+          sauna_temperature: self.sauna_rooms.map(&:sauna_temperature),
+          mizu_temperature: self.sauna_rooms.map(&:mizu_temperature),
+          gender: self.sauna_rooms.map(&:gender),
+
           loyly: self.sauna_roles.map(&:loyly),
           auto_loyly: self.sauna_roles.map(&:auto_loyly),
           self_loyly: self.sauna_roles.map(&:self_loyly),
@@ -148,6 +152,10 @@ module SaunaSearchable
           "query": {
             "more_like_this": {
                   "fields": [
+                    "sauna_temperature",
+                    "mizu_temperature",
+                    "gender",
+
                     "loyly",
                     "auto_loyly",
                     "self_loyly",
