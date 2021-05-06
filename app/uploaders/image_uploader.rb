@@ -11,7 +11,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     if Rails.env.development?
       "uploads/#{model.id}"
     elsif Rails.env.test?
-      "uploads/#{model.id}"
+      "test/uploads/#{model.id}"
     else
       "#{model.id}"
     end
@@ -23,5 +23,9 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def filename
     original_filename if original_filename
+  end
+
+  def extension_whitelist
+    %w(jpg jpeg gif png)
   end
 end

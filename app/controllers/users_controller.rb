@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   # before_action :authenticate_user!
+  protect_from_forgery
 
   # GET /users or /users.json
   def index
@@ -37,15 +38,39 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    
+    
+    if user_params[:avatar].present?
+      image = @user.decode_base64_image user_params[:avatar]
+      begin
+        respond_to do |format|
+          if @user.update(user_params) && image && @user.update(avatar: image)
+            format.html { redirect_to @user, notice: "User was successfully updated." }
+            format.json { render :show, status: :ok, location: @user }
+          else
+            format.html { render :edit, status: :unprocessable_entity }
+            format.json { render json: @user.errors.full_messages, status: :unprocessable_entity }
+          end
+        end
+      ensure
+        image.close
+        image.unlink
+      end
+    else
+      respond_to do |format|
+        if @user.update(user_params)
+          format.html { redirect_to @user, notice: "User was successfully updated." }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @user.errors.full_messages, status: :unprocessable_entity }
+        end
       end
     end
+
+
+
+
   end
 
   # DELETE /users/1 or /users/1.json
@@ -65,6 +90,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username)
+      params.require(:user).permit(:username, :avatar, :name, :email, :password, :confilm_password, :current_password)
     end
 end

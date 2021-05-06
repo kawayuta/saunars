@@ -1,4 +1,4 @@
-json.extract! user, :id, :username, :created_at, :updated_at
+json.extract! user, :id, :username, :name, :email, :created_at, :updated_at, :avatar
 json.url user_url(user, format: :json)
 json.wents user.wents.order(id: :DESC).pluck(:sauna_id).map { |id| Sauna.find(id) }
 json.activities user.activities.order(id: :DESC)

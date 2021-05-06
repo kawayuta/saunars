@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_220539) do
+ActiveRecord::Schema.define(version: 2021_05_05_153900) do
 
   create_table "activities", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_220539) do
     t.bigint "review_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.json "images"
     t.index ["review_id"], name: "index_activities_on_review_id"
     t.index ["sauna_id"], name: "index_activities_on_sauna_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
@@ -132,7 +133,6 @@ ActiveRecord::Schema.define(version: 2021_04_26_220539) do
     t.datetime "updated_at", precision: 6, null: false
     t.float "latitude"
     t.float "longitude"
-    t.text "feeds"
     t.text "feed", size: :long
   end
 
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_220539) do
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true

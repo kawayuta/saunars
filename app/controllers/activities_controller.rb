@@ -1,3 +1,5 @@
+
+require 'json'
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: %i[ show edit update destroy ]
   protect_from_forgery
@@ -25,18 +27,48 @@ class ActivitiesController < ApplicationController
   # POST /activities or /activities.json
   def create
 
-    @activity = Activity.new(activity_params)
-    @activity.save
+    if activity_params[:images].present?
+      imgArray = []
+      activity_params[:images].each do |d|
+        imgArray.append(Activity.decode_base64_image(d))
+      end
+      attrs = activity_params
+      attrs[:images] = imgArray
+      @activity = Activity.new(attrs)
 
-    respond_to do |format|
-      if @activity.save
-        format.html { redirect_to @activity, notice: "Activity was successfully created." }
-        format.json { render :show, status: :created, location: @activity }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @activity.errors, status: :unprocessable_entity }
+      begin
+        respond_to do |format|
+          if @activity.save && imgArray && @activity.save(images: imgArray)
+            format.html { redirect_to @activity, notice: "Activity was successfully created." }
+            format.json { render :show, status: :created, location: @activity }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @activity.errors, status: :unprocessable_entity }
+          end
+        end
+      ensure
+        imgArray.each do |d|
+          d.close
+          d.unlink
+        end
+      end
+      
+    else
+      @activity = Activity.new(activity_params)
+      respond_to do |format|
+        if @activity.save
+          format.html { redirect_to @activity, notice: "Activity was successfully created." }
+          format.json { render :show, status: :created, location: @activity }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @activity.errors, status: :unprocessable_entity }
+        end
       end
     end
+
+
+
+
   end
 
   # PATCH/PUT /activities/1 or /activities/1.json
@@ -70,7 +102,7 @@ class ActivitiesController < ApplicationController
     # Only allow a list of trusted parameters through.
     
     def activity_params
-      params.permit(:sauna_id, :user_id, :body, :image, :sauna_time, :sauna_count, :mizuburo_time, :mizuburo_count, :rest_time, :rest_count, review_attributes: [:id, :sauna_id, :user_id, :cleanliness, :customer_service, :equipment, :customer_manner, :cost_performance])
+      params.permit(:sauna_id, :user_id, :body, :image, :sauna_time, :sauna_count, :mizuburo_time, :mizuburo_count, :rest_time, :rest_count, images: [], review_attributes: [:id, :sauna_id, :user_id, :cleanliness, :customer_service, :equipment, :customer_manner, :cost_performance])
     end
 
 

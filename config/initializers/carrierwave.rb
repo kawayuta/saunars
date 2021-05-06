@@ -15,4 +15,8 @@ unless Rails.env.development? || Rails.env.test?
       config.fog_directory  = 'sauna-image'
       config.cache_storage = :fog
     end
+
+
+  CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
+
   end
