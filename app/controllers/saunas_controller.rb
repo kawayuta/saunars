@@ -62,9 +62,9 @@ class SaunasController < ApplicationController
     wents = current_user.wents.limit(30).shuffle.pluck(:sauna_id)
 
     if wents.count > 4
-      @recommend_saunas = Sauna.es_recommend_currentLocation_search(wents, currentLatitude, currentLongitude).records
+      @recommend_saunas = Sauna.es_recommend_currentLocation_search(wents).records
     else
-      @recommend_saunas = Sauna.es_currentLocation_search(word, latitude, longitude, radius, currentLatitude, currentLongitude, sortType).records.ransack(search_params).result(distinct: true).limit(10)
+      @recommend_saunas = Sauna.all.limit(10)
     end
   end
 

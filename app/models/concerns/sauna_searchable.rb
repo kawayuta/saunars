@@ -147,7 +147,7 @@ module SaunaSearchable
 
 
 
-      def es_recommend_currentLocation_search(wents, currentLatitude, currentLongitude)
+      def es_recommend_currentLocation_search(wents)
         __elasticsearch__.search({
           "query": {
             "more_like_this": {
