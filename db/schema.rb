@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_153900) do
+ActiveRecord::Schema.define(version: 2021_05_08_174609) do
 
   create_table "activities", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(version: 2021_05_05_153900) do
     t.index ["review_id"], name: "index_activities_on_review_id"
     t.index ["sauna_id"], name: "index_activities_on_sauna_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "likes", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "activity_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["activity_id"], name: "index_likes_on_activity_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "reviews", charset: "utf8mb4", force: :cascade do |t|
@@ -169,6 +178,8 @@ ActiveRecord::Schema.define(version: 2021_05_05_153900) do
   add_foreign_key "activities", "reviews"
   add_foreign_key "activities", "saunas"
   add_foreign_key "activities", "users"
+  add_foreign_key "likes", "activities"
+  add_foreign_key "likes", "users"
   add_foreign_key "reviews", "saunas"
   add_foreign_key "reviews", "users"
   add_foreign_key "sauna_amenities", "saunas"

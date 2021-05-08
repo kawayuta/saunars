@@ -5,6 +5,7 @@ class User < ApplicationRecord
         include DeviseTokenAuth::Concerns::User
 
         has_many :wents, dependent: :destroy
+        has_many :likes, dependent: :destroy
         has_many :wented_saunas, through: :wents, source: :saunas
         has_many :activities, dependent: :destroy
         has_many :activityed_saunas, through: :activities, source: :saunas

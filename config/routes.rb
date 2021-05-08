@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'incremental_search', to: 'saunas#incremental_search'
 
   resources :wents, only: [:create, :show, :destroy]
+  resources :likes, only: [:create, :show, :destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
    # token auth routes available at /api/v1/auth
