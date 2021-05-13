@@ -145,9 +145,89 @@ module SaunaSearchable
       end
 
 
+      def es_recommend_currentLocation_search(wents, lat, lon)
+        __elasticsearch__.search({
+          "query": {
+            "bool": {
+              "filter": {
+                        "geo_distance": {
+                            "distance": "#{50}km",
+                            "location": {
+                                "lat": lat,
+                                "lon": lon
+                            }
+                        }
+                },
+              "must": [
+                {
+                  "more_like_this": {
+                        "fields": [
+                          "sauna_temperature",
+                          "mizu_temperature",
+                          "gender",
+      
+                          "loyly",
+                          "auto_loyly",
+                          "self_loyly",
+                          "gaikiyoku",
+                          "rest_space",
+                          "free_time",
+                          "capsule_hotel",
+                          "in_rest_space",
+                          "eat_space",
+                          "wifi",
+                          "power_source",
+                          "work_space",
+                          "manga",
+                          "body_care",
+                          "body_towel",
+                          "water_dispenser",
+                          "washlet",
+                          "credit_settlement",
+                          "parking_area",
+                          "ganbanyoku",
+                          "tattoo",
+      
+                          "shampoo",
+                          "conditioner",
+                          "body_soap",
+                          "face_soap",
+                          "razor",
+                          "toothbrush",
+                          "nylon_towel",
+                          "hairdryer",
+                          "face_towel_unlimited",
+                          "bath_towel_unlimited",
+                          "sauna_underpants_unlimited",
+                          "sauna_mat_unlimited",
+                          "flutterboard_unlimited",
+                          "toner",
+                          "emulsion",
+                          "makeup_remover",
+                          "cotton_swab",
+                        ],
+                        "like": [
+                          {
+                            "_id": wents[0],
+                            "_id": wents[1],
+                            "_id": wents[2],
+                            "_id": wents[3],
+                            "_id": wents[4],
+                          }
+                        ],
+                        "min_term_freq": 1,
+                        "max_query_terms": 12
+                  }
+                }
+              ]
+            }
+          },
+          "size": 30
+        })
+      end
 
 
-      def es_recommend_currentLocation_search(wents)
+      def es_recommend_search(wents)
         __elasticsearch__.search({
           "query": {
             "more_like_this": {
@@ -209,7 +289,7 @@ module SaunaSearchable
                   "max_query_terms": 12
                 }
           },
-          "size": 50
+          "size": 30
         })
       end
 

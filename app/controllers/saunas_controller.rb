@@ -52,6 +52,7 @@ class SaunasController < ApplicationController
   end
 
   def recommend
+
     word = search_params[:name_ja_or_address_cont].to_s
     latitude = params[:latitude].to_f
     longitude = params[:longitude].to_f
@@ -59,14 +60,29 @@ class SaunasController < ApplicationController
     currentLongitude = params[:currentLongitude].to_f
     radius = params[:radius].to_i
     sortType = params[:sortType].to_s
+    type = params[:type].to_s
     wents = current_user.wents.limit(30).shuffle.pluck(:sauna_id)
 
-    if wents.count > 4
-      @recommend_saunas = Sauna.es_recommend_currentLocation_search(wents).records
+    unless type.blank?
+      if type == "location"
+        if wents.count > 4
+          @recommend_saunas = Sauna.es_recommend_currentLocation_search(wents, currentLatitude, currentLongitude).records
+        else
+          @recommend_saunas = Sauna.es_currentLocation_search("", currentLatitude, currentLongitude, 30, currentLatitude, currentLongitude, 0).records
+        end
+      end
+
     else
-      @recommend_saunas = Sauna.all.limit(10)
+      if wents.count > 4
+        @recommend_saunas = Sauna.es_recommend_search(wents).records
+      else
+        @recommend_saunas = Sauna.all.limit(10)
+      end
     end
+
   end
+
+  
 
   # GET /saunas/1 or /saunas/1.json
   def show
