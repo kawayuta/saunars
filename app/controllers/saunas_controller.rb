@@ -66,15 +66,15 @@ class SaunasController < ApplicationController
     unless type.blank?
       if type == "location"
         if wents.count > 4
-          @recommend_saunas = Sauna.es_recommend_currentLocation_search(wents, currentLatitude, currentLongitude).records
+          @recommend_saunas = Sauna.es_recommend_currentLocation_search(wents, currentLatitude, currentLongitude).records.limit(30)
         else
-          @recommend_saunas = Sauna.es_currentLocation_search("", currentLatitude, currentLongitude, 30, currentLatitude, currentLongitude, 0).records
+          @recommend_saunas = Sauna.es_currentLocation_search("", currentLatitude, currentLongitude, 30, currentLatitude, currentLongitude, 0).records.limit(30)
         end
       end
 
     else
       if wents.count > 4
-        @recommend_saunas = Sauna.es_recommend_search(wents).records
+        @recommend_saunas = Sauna.es_recommend_search(wents).records.limit(30)
       else
         @recommend_saunas = Sauna.all.limit(10)
       end

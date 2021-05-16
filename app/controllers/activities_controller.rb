@@ -7,7 +7,7 @@ class ActivitiesController < ApplicationController
 
   # GET /activities or /activities.json
   def index
-    @activities = Activity.all.order(id: :DESC).limit(100)
+    @activities = Activity.all.order(id: :DESC).limit(20)
   end
 
   # GET /activities/1 or /activities/1.json
