@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_08_174609) do
+ActiveRecord::Schema.define(version: 2021_05_15_214540) do
 
   create_table "activities", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2021_05_08_174609) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.json "images"
+    t.integer "feel"
     t.index ["review_id"], name: "index_activities_on_review_id"
     t.index ["sauna_id"], name: "index_activities_on_sauna_id"
     t.index ["user_id"], name: "index_activities_on_user_id"

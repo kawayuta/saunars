@@ -9,12 +9,12 @@ class SaunasController < ApplicationController
     unless params[:sort].blank?
       sort = params[:sort].to_s
       if sort == "pop"
-        @saunas = Sauna.all.limit(30)
+        @saunas = Sauna.all.sort_by {|sauna| sauna.wents.size}.reverse.take(30)
       end
+    else
+      word = params[:search_word].to_s
+      @saunas = Sauna.es_search(word).records
     end
-
-    word = params[:search_word].to_s
-    @saunas = Sauna.es_search(word).records
   end
 
   def search
