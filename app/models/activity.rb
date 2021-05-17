@@ -6,7 +6,11 @@ class Activity < ApplicationRecord
     accepts_nested_attributes_for :review, :allow_destroy => true
 
     mount_uploaders :images, ActivityImageUploader
-        
+    
+    def created_at
+        attributes['created_at'].strftime("%Y/%m/%d")
+      end
+      
     def parsed_tags(images)
         return JSON.parse(images) if images.present?
         {}

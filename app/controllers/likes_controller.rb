@@ -11,7 +11,8 @@ class LikesController < ApplicationController
   # GET /likes/1 or /likes/1.json
   def show
     render json: {
-      is_like: current_user.likes.find_by(activity_id: params[:id]).present?
+      is_like: current_user.likes.find_by(activity_id: params[:id]).present?,
+      like_count: Like.where(activity_id: params[:id]).count
     }
   end
 
