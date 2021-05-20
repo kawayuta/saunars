@@ -16,6 +16,9 @@ Rails.application.configure do
   config.hosts << "kawayuta.local"
   config.hosts << "web.local"
   force_ssl = false
+
+
+  config.cache_store = :redis_store, "redis://localhost:6379/0/cache"
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
