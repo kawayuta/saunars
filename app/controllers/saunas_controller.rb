@@ -138,7 +138,7 @@ class SaunasController < ApplicationController
   private
 
     def cache_went_ranking
-      Rails.cache.fetch("cache_articles", expires_in: 60.minutes) do
+      Rails.cache.fetch("cache_went_ranking", expires_in: 60.minutes) do
         Sauna.all.sort_by {|sauna| sauna.wents.size}.reverse.take(30)
       end
     end
