@@ -9,7 +9,7 @@ class SaunasController < ApplicationController
     unless params[:sort].blank?
       sort = params[:sort].to_s
       if sort == "pop"
-        @saunas = cache_went_ranking.page(params[:page]).per(20)
+        @saunas = Kaminari.paginate_array(Sauna.all.sort_by {|sauna| sauna.wents.size}.reverse).page(params[:page]).per(20)
       end
     else
       word = params[:search_word].to_s
