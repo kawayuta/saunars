@@ -10,8 +10,6 @@ Rails.application.configure do
   config.hosts << "118.27.24.71"
   config.hosts << "o9sec.com"
   
-
-  config.cache_store = :redis_cache_store, "redis://o9sec.com:6379/0/cache"
   # staging
   config.hosts << "118.27.30.51"
 
